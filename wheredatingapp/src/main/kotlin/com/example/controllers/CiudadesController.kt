@@ -1,14 +1,18 @@
 package com.example.controllers
 
-import com.example.models.classes.Ciudad
-import com.example.models.classes.CiudadesRepository
+import com.example.models.Ciudad
 import com.example.services.CiudadesService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.swing.text.html.parser.Entity
 
 
 @RestController
@@ -17,18 +21,57 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin("*")
 class CiudadesController() {
 
-    private val ciudadesService = CiudadesService(CiudadesRepository())
+    @Autowired
+    lateinit var ciudadesService: CiudadesService
 
     @GetMapping("/")
-    fun getAll() : ResponseEntity<List<Ciudad>> {
+    fun getAll(): ResponseEntity<List<Ciudad>> {
 
         val lisCiudades = ciudadesService.getAll()
 
-        return if (lisCiudades.isNotEmpty()){
+        return if (lisCiudades.isNotEmpty()) {
             ResponseEntity(lisCiudades, HttpStatus.OK)
-        }else{
-            ResponseEntity(lisCiudades,HttpStatus.BAD_REQUEST)
+        } else {
+            ResponseEntity(lisCiudades, HttpStatus.BAD_REQUEST)
         }
     }
+
+    @PostMapping("/insert")
+    fun insertCiudad(@RequestBody ciudad: Ciudad): ResponseEntity<String> {
+
+        val insertado = ciudadesService.insertCiudad(ciudad)
+
+        return if (insertado) {
+            ResponseEntity("Ciudad insertada correctamente", HttpStatus.OK)
+        } else {
+            ResponseEntity("Fallo en la inserción de la ciudad", HttpStatus.BAD_REQUEST)
+        }
+
+    }
+
+    /*
+    @GetMapping("/?tier={tier}")
+    fun getByTier(@PathVariable tier : String) : ResponseEntity<List<Ciudad>>{
+
+        val numTier = tier.toIntOrNull()
+
+        if (numTier != null){
+            val lisCiudades = ciudadesService.getByTier(numTier)
+
+            return if (lisCiudades.isNotEmpty()){
+                ResponseEntity(lisCiudades, HttpStatus.OK)
+            }else{
+                ResponseEntity(lisCiudades,HttpStatus.BAD_REQUEST)
+            }
+
+        }else{
+
+            return ResponseEntity(null,HttpStatus.BAD_REQUEST)
+
+        }
+
+    }
+
+     */
 
 }
