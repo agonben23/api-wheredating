@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -24,7 +25,7 @@ class CiudadesController() {
     @Autowired
     lateinit var ciudadesService: CiudadesService
 
-    @GetMapping("/")
+    @GetMapping("/all")
     fun getAll(): ResponseEntity<List<Ciudad>> {
 
         val lisCiudades = ciudadesService.getAll()
@@ -36,7 +37,7 @@ class CiudadesController() {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/")
     fun insertCiudad(@RequestBody ciudad: Ciudad): ResponseEntity<String> {
 
         val insertado = ciudadesService.insertCiudad(ciudad)
@@ -49,6 +50,18 @@ class CiudadesController() {
 
     }
 
+    @PutMapping("/")
+    fun updateCiudad(@RequestBody ciudad: Ciudad): ResponseEntity<String> {
+
+        val update = ciudadesService.updateCiudad(ciudad)
+
+        return if (update) {
+            ResponseEntity("Ciudad modificada correctamente", HttpStatus.OK)
+        } else {
+            ResponseEntity("Fallo en la modifición de la ciudad", HttpStatus.BAD_REQUEST)
+        }
+
+    }
     /*
     @GetMapping("/?tier={tier}")
     fun getByTier(@PathVariable tier : String) : ResponseEntity<List<Ciudad>>{
