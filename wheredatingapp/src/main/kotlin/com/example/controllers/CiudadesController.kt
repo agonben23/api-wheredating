@@ -5,15 +5,7 @@ import com.example.services.CiudadesService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import javax.swing.text.html.parser.Entity
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
@@ -28,7 +20,7 @@ class CiudadesController() {
     @GetMapping("/all")
     fun getAll(): ResponseEntity<List<Ciudad>> {
 
-        val lisCiudades = ciudadesService.getAll()
+        val lisCiudades = ciudadesService.all
 
         return if (lisCiudades.isNotEmpty()) {
             ResponseEntity(lisCiudades, HttpStatus.OK)
@@ -40,11 +32,10 @@ class CiudadesController() {
     @PostMapping("/")
     fun insertCiudad(@RequestBody ciudad: Ciudad): ResponseEntity<String> {
 
-        val insertado = ciudadesService.insertCiudad(ciudad)
-
-        return if (insertado) {
+        return try {
+            val insertado = ciudadesService.save(ciudad)
             ResponseEntity("Ciudad insertada correctamente", HttpStatus.OK)
-        } else {
+        }catch (e : Exception){
             ResponseEntity("Fallo en la inserción de la ciudad", HttpStatus.BAD_REQUEST)
         }
 
@@ -53,15 +44,15 @@ class CiudadesController() {
     @PutMapping("/")
     fun updateCiudad(@RequestBody ciudad: Ciudad): ResponseEntity<String> {
 
-        val update = ciudadesService.updateCiudad(ciudad)
-
-        return if (update) {
-            ResponseEntity("Ciudad modificada correctamente", HttpStatus.OK)
-        } else {
-            ResponseEntity("Fallo en la modifición de la ciudad", HttpStatus.BAD_REQUEST)
+        return try {
+            val update = ciudadesService.save(ciudad)
+            ResponseEntity("Ciudad insertada correctamente", HttpStatus.OK)
+        }catch (e : Exception){
+            ResponseEntity("Fallo en la actudalización de la ciudad", HttpStatus.BAD_REQUEST)
         }
 
     }
+
     /*
     @GetMapping("/?tier={tier}")
     fun getByTier(@PathVariable tier : String) : ResponseEntity<List<Ciudad>>{
