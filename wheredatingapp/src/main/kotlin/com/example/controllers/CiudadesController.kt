@@ -41,6 +41,20 @@ class CiudadesController() {
 
     }
 
+    @PostMapping("/all")
+    fun insertCiudades(@RequestBody ciudades: List<Ciudad>): ResponseEntity<String> {
+
+        return try {
+            for (ciudad in ciudades) {
+                val insertado = ciudadesService.save(ciudad)
+            }
+            ResponseEntity("Ciudades insertadas correctamente", HttpStatus.OK)
+        }catch (e : Exception){
+            ResponseEntity("Fallo en la inserción de la ciudades", HttpStatus.BAD_REQUEST)
+        }
+
+    }
+
     @PutMapping("/")
     fun updateCiudad(@RequestBody ciudad: Ciudad): ResponseEntity<String> {
 
