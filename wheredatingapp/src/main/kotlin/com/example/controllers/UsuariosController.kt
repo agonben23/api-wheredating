@@ -22,7 +22,19 @@ class UsuariosController() {
     @Autowired
     lateinit var usuariosService: UsuariosService
 
-    @GetMapping("/")
+    @GetMapping("/all")
+    fun getAll() : ResponseEntity<List<Usuario>>{
+        return try {
+
+            val lisUsers = usuariosService.all
+
+            ResponseEntity(lisUsers, HttpStatus.OK)
+        } catch (e: Exception) {
+            ResponseEntity(null, HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @GetMapping("/one")
     fun getOne(@RequestBody usuario: Usuario): ResponseEntity<Usuario?> {
 
         return try {
