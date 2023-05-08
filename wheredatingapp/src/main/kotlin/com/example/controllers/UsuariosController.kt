@@ -6,12 +6,7 @@ import com.example.services.UsuariosService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 //TODAS LAS PETICIONES QUE LLEGUEN A "/api/v1/productos"
@@ -34,7 +29,7 @@ class UsuariosController() {
         }
     }
 
-    @GetMapping("/one")
+    @PutMapping("/one")
     fun getOne(@RequestBody usuario: Usuario): ResponseEntity<Usuario?> {
 
         return try {
@@ -53,13 +48,13 @@ class UsuariosController() {
     }
 
     @PostMapping("/")
-    fun insertUser(@RequestBody usuario: Usuario): ResponseEntity<String> {
+    fun insertUser(@RequestBody usuario: Usuario): ResponseEntity<Usuario?> {
 
         return try {
             val insertado = usuariosService.save(usuario)
-            ResponseEntity("Usuario insertado correctamente", HttpStatus.OK)
+            ResponseEntity(insertado, HttpStatus.OK)
         } catch (e: Exception) {
-            ResponseEntity("Fallo en la inserción del usuario", HttpStatus.BAD_REQUEST)
+            ResponseEntity(null, HttpStatus.BAD_REQUEST)
         }
 
     }
