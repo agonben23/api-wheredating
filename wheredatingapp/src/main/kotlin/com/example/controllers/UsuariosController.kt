@@ -23,7 +23,7 @@ class UsuariosController() {
     @Autowired
     lateinit var usuariosService: UsuariosService
 
-    @PutMapping("/")
+    @PostMapping("/one")
     fun getOne(@RequestBody usuario: Usuario): ResponseEntity<Usuario?> {
 
         return try {
