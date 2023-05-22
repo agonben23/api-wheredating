@@ -42,13 +42,13 @@ class UsuariosController() {
     }
 
     @PostMapping("/")
-    fun insertUser(@RequestBody usuario: Usuario): ResponseEntity<String> {
+    fun insertUser(@RequestBody usuario: Usuario): ResponseEntity<Usuario?> {
 
         return try {
             val insertado = usuariosService.save(usuario)
-            ResponseEntity("Usuario insertado correctamente", HttpStatus.OK)
+            ResponseEntity(usuario, HttpStatus.OK)
         } catch (e: Exception) {
-            ResponseEntity("Fallo en la inserción del usuario", HttpStatus.BAD_REQUEST)
+            ResponseEntity(null, HttpStatus.BAD_REQUEST)
         }
 
     }

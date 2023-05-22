@@ -12,7 +12,7 @@ data class Ciudad(
 
     @Column(name = "población") val nombre: String,
     @Column(name = "provincia") val provincia: String,
-    @Column(name = "tier") val tier : Int? = 0,
+    @Column(name = "tier") val tier : Int? = 5,
     @Column(name = "latitud") val latitud : Double,
     @Column(name = "longitud") val longitud : Double
 )
