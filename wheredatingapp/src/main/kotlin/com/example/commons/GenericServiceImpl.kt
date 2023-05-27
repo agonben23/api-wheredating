@@ -5,6 +5,9 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.io.Serializable
 
+/**
+ * Esta clase es la implementación de la interfaz [GenericServiceAPI]
+ */
 @Service
 abstract class GenericServiceImpl<T : Any,ID : Serializable> : GenericServiceAPI<T, ID> {
 

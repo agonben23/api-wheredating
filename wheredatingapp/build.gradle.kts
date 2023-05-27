@@ -23,12 +23,14 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.springframework.boot:spring-boot-starter-validation:3.0.2")
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.0.4")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.8.10")
 }
 
 tasks.withType<KotlinCompile> {
