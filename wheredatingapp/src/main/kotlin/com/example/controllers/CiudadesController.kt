@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*
  * @property ciudadesService Es una instancia de la clase servicio [CiudadesService]. A través de la anotación @Aurowired se realiza la injección de dependencia de dicha clase.
  */
 @RestController
-//TODAS LAS PETICIONES QUE LLEGUEN A "/api/v1/ciudades"
 @RequestMapping("/api/v1/ciudades")
 @CrossOrigin("*")
 class CiudadesController() {
