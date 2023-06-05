@@ -24,9 +24,9 @@ data class Ciudad(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Int? = null,
 
-    @Column(name = "población") val nombre: String,
+    @Column(name = "nombre") val nombre: String,
     @Column(name = "provincia") val provincia: String,
-    @Column(name = "tier") val tier : Int? = 5,
     @Column(name = "latitud") val latitud : Double,
-    @Column(name = "longitud") val longitud : Double
+    @Column(name = "longitud") val longitud : Double,
+    @Column(name = "tier") val tier : Int? = 5
 )

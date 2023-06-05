@@ -2,12 +2,15 @@ package com.example.security
 
 import com.example.services.UsuariosService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
 
 
 /**
  * Esta clase se usará para securizar la API REST
  * @property usuariosService Es una instancia de la clase servicio [UsuariosService]. A través de la anotación @Aurowired se realiza la injección de dependencia de dicha clase.
  */
+
+@Controller
 class Security {
 
 

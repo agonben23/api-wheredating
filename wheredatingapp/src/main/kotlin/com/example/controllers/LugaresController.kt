@@ -1,6 +1,8 @@
 package com.example.controllers
 
+import com.example.models.Ciudad
 import com.example.models.Lugar
+import com.example.services.CiudadesService
 import com.example.services.LugaresService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -20,18 +22,22 @@ class LugaresController {
     @Autowired
     lateinit var lugaresService: LugaresService
 
+    @Autowired
+    lateinit var ciudadesService : CiudadesService
+
     @PostMapping("/bycity")
     fun getbyCity(@RequestBody ciudad : String): ResponseEntity<List<Lugar>> {
 
-        var lisLugares = lugaresService.all
+        return try {
+            val ciudadBusqueda = ciudad.replace("\"","")
 
-        lisLugares = lisLugares.filter { it.ciudad.nombre == ciudad }.toMutableList()
+            val lisLugares = lugaresService.all.filter { it.ciudad.nombre == ciudadBusqueda }
 
-        return if (lisLugares.isNotEmpty()) {
             ResponseEntity(lisLugares, HttpStatus.OK)
-        } else {
-            ResponseEntity(lisLugares, HttpStatus.BAD_REQUEST)
+        } catch (e: Exception) {
+            ResponseEntity(emptyList(), HttpStatus.BAD_REQUEST)
         }
+
     }
 
 }
