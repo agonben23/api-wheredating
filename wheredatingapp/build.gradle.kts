@@ -31,6 +31,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.8.10")
+	implementation("org.jetbrains.kotlin:kotlin-test:1.8.20")
 }
 
 tasks.withType<KotlinCompile> {

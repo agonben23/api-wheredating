@@ -29,12 +29,15 @@ class CiudadesController() {
     @GetMapping("/all")
     fun getAll(): ResponseEntity<List<Ciudad>> {
 
-        val lisCiudades = ciudadesService.all
+        return try {
 
-        return if (lisCiudades.isNotEmpty()) {
+            val lisCiudades = ciudadesService.all
+
             ResponseEntity(lisCiudades, HttpStatus.OK)
-        } else {
-            ResponseEntity(lisCiudades, HttpStatus.BAD_REQUEST)
+
+        }catch (e : Exception){
+
+            ResponseEntity(emptyList(), HttpStatus.BAD_REQUEST)
         }
     }
 

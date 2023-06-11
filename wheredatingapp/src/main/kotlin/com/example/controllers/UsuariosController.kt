@@ -1,16 +1,12 @@
 package com.example.controllers
 
-import com.example.models.Ciudad
 import com.example.models.Usuario
 import com.example.security.Security
-import com.example.services.CiudadesService
 import com.example.services.UsuariosService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -46,14 +42,14 @@ class UsuariosController() {
 
         //if (security.isAuthorized(token)){
             return try {
-                val user = usuario
 
                 val lisUsers = usuariosService.all
 
                 val response =
-                    lisUsers.find { (it.mail == user.mail || it.nick == user.nick) && it.password == user.password }
+                    lisUsers.find { (it.mail == usuario.mail || it.nick == usuario.nick) && it.password == usuario.password }
 
                 ResponseEntity(response, HttpStatus.OK)
+
             } catch (e: Exception) {
                 ResponseEntity(null, HttpStatus.BAD_REQUEST)
             }
@@ -76,8 +72,16 @@ class UsuariosController() {
     fun insertUser(@RequestBody usuario: Usuario): ResponseEntity<Usuario?> {
 
         return try {
-            val insertado = usuariosService.save(usuario)
-            ResponseEntity(usuario, HttpStatus.OK)
+
+            if(!usuariosService.all.any { it.mail == usuario.mail || it.nick == usuario.nick}) {
+
+                val insertado = usuariosService.save(usuario)
+                ResponseEntity(usuario, HttpStatus.OK)
+            }else{
+                ResponseEntity(null,HttpStatus.OK)
+            }
+
+
         } catch (e: Exception) {
             ResponseEntity(null, HttpStatus.BAD_REQUEST)
         }

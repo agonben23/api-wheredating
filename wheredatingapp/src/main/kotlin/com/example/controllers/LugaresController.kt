@@ -40,4 +40,16 @@ class LugaresController {
 
     }
 
+    @PostMapping("/one")
+    fun insertLugar(@RequestBody lugar : Lugar) : ResponseEntity<String>{
+
+        return try {
+            val insertado = lugaresService.save(lugar)
+            ResponseEntity("Lugar insertado correctamente", HttpStatus.OK)
+        }catch (e : Exception){
+            ResponseEntity("Fallo en la inserción del lugar", HttpStatus.BAD_REQUEST)
+        }
+
+    }
+
 }
