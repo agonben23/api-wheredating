@@ -1,7 +1,6 @@
 package com.example.controllers
 
 import com.example.models.Usuario
-import com.example.security.Security
 import com.example.services.UsuariosService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -21,16 +20,12 @@ import org.springframework.web.bind.annotation.RestController
  * @property security Es una instancia de la clase [Security]. A través de la anotación @Aurowired se realiza la injección de dependencia de dicha clase.
  */
 @RestController
-//TODAS LAS PETICIONES QUE LLEGUEN A "/api/v1/usuarios"
 @RequestMapping("/api/v1/usuarios")
 @CrossOrigin("*")
 class UsuariosController() {
 
     @Autowired
     lateinit var usuariosService: UsuariosService
-
-    @Autowired
-    lateinit var security: Security
 
     /**
      * Busca un usuario en la base de datos usando los datos del parámetro [usuario]

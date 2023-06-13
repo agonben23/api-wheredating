@@ -1,18 +1,19 @@
 package com.example.controllers
 
-import com.example.models.Ciudad
 import com.example.models.Lugar
-import com.example.services.CiudadesService
 import com.example.services.LugaresService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
+/**
+ * Esta clase realiza la funciones de controlador para la clase modelo [Lugar] haciendo uso de la clase servicio [LugaresService].
+ *
+ * Acepta las peticiones que se ejecuten a través de la URI relativa "/api/v1/lugares".
+ *
+ * @property lugaresService Es una instancia de la clase servicio [LugaresService]. A través de la anotación @Aurowired se realiza la injección de dependencia de dicha clase.
+ */
 @RestController
 @RequestMapping("/api/v1/lugares")
 @CrossOrigin("*")
@@ -21,9 +22,6 @@ class LugaresController {
 
     @Autowired
     lateinit var lugaresService: LugaresService
-
-    @Autowired
-    lateinit var ciudadesService : CiudadesService
 
     @PostMapping("/bycity")
     fun getbyCity(@RequestBody ciudad : String): ResponseEntity<List<Lugar>> {
